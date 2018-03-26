@@ -7,16 +7,12 @@
 
 #include "types.h"
 
-#define PATH_MAX 255
-
 typedef void (*ftps4_log_cb_t)(const char *);
 
 /* Returns PS4's IP and FTP port. 0 on success */
 int ftps4_init(const char *ps4_ip, unsigned short int ps4_port);
 void ftps4_fini();
 int ftps4_is_initialized();
-void ftps4_set_info_log_cb(ftps4_log_cb_t cb);
-void ftps4_set_debug_log_cb(ftps4_log_cb_t cb);
 void ftps4_set_file_buf_size(unsigned int size);
 
 /* Extended functionality */
