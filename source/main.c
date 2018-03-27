@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2015 Sergi Granell (xerpi)
- *
- * 
+ * * 
  * Credits: xVortex, BISOON, Mistawes
+ * 
+ */
 
 #include "ps4.h"
 #include "ps4api.h"
@@ -224,6 +225,15 @@ int kpayload(struct thread *td){
 
 	// Enable uart :)
 	*(char *)(kernel_base + 0x1997BC8) = 0;
+
+	// registry patches for extra debug information
+	// fucks with the whole system, patches sceRegMgrGetInt
+	// 405
+	//*(uint32_t *)(kernbase + 0x4CECB7) = 0;
+	//*(uint32_t *)(kernbase + 0x4CFB9B) = 0;
+	// 455
+	//*(uint32_t *)(kernbase + 0x4D70F7) = 0;
+	//*(uint32_t *)(kernbase + 0x4D7F81) = 0;
 
 	// Debug settings patchs
 	*(char *)(kernel_base + 0x1B6D086) |= 0x14;

@@ -1,3 +1,6 @@
+/*
+ * Credits: xVortex, BISOON, Mistawes 
+ */
 #include "ps4.h"
 #include "include/ps4api.h"
 #include "include/defines.h"
@@ -21,7 +24,7 @@
 int createThread(void*(func)(void*), void* args)
 {
 	ScePthread sceThread;
-	return scePthreadCreate(&sceThread, NULL, func, args, "Clien Thread") == 0;
+	return scePthreadCreate(&sceThread, NULL, func, args, "Client Thread") == 0;
 }
 
 void* clientHandler(void* args)
