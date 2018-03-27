@@ -17,7 +17,6 @@
 #define KERN_PRISON_0 0x10399B0
 #define KERN_ROOTVNODE 0x21AFA30
 #define KERN_PTRACE_CHECK 0x17D2C1
-#define VERSION "1.1"
 
 int createThread(void*(func)(void*), void* args)
 {
@@ -71,7 +70,7 @@ void* clientHandler(void* args)
 	return NULL;
 }
 
-int ps4api(void) {
+void* ps4api(void* td) {
 	initSockets();
 	initSysUtil();
 	struct sockaddr_in clientStruct;

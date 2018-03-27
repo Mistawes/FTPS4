@@ -7,6 +7,8 @@
 
 #include "types.h"
 
+#define VERSION "4.55.2w"
+
 typedef void (*ftps4_log_cb_t)(const char *);
 
 /* Returns PS4's IP and FTP port. 0 on success */

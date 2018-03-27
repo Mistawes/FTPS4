@@ -10,5 +10,5 @@ int createThread(void*(func)(void*), void* args);
 
 void* clientHandler(void* args);
 
-int ps4api(void);
+void* ps4api(void* td);
 

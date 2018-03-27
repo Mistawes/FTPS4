@@ -1,6 +1,5 @@
 #ifndef __DEFINES
 #define __DEFINES
-#define VERSION "1.2"
 
 #define INFINITE ;;
 #define bool char

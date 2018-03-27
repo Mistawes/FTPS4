@@ -186,9 +186,6 @@ int kpayload(struct thread *td){
 
 	fd = td->td_proc->p_fd;
 	cred = td->td_proc->p_ucred;
-
-	// Get ptrKernel for PS4API
-	uint8_t* ptrKernel = getKernelBase();
 	
 	void* kernel_base = &((uint8_t*)__readmsr(0xC0000082))[-KERN_XFAST_SYSCALL];
 	uint8_t* kernel_ptr = (uint8_t*)kernel_base;
@@ -298,14 +295,14 @@ int _main(struct thread *td)
 	syscall(11,kpayload,td);
 
 	initSysUtil();
-	notify("Welcome to FTPS4 v"VERSION);
+	notify("Welcome to FTPS4API v"VERSION);
 
 	int startPs4Api;
 
 	ScePthread thread;
 	scePthreadCreate(&thread, NULL, ps4api, (void *)&startPs4Api, "ps4api_thread");
 
-
+	// Start FTPS4
 	int ret = get_ip_address(ip_address);
 	if (ret < 0)
 	{
@@ -335,7 +332,7 @@ error:
 	closeDebugSocket();
 #endif
 
-	// Wait until the thread terminates
+	// Wait until the ps4_api thread terminates
 	scePthreadJoin(thread, NULL);
 	return startPs4Api;
 	return 0;
