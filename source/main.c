@@ -1,6 +1,9 @@
 /*
  * Copyright (c) 2015 Sergi Granell (xerpi)
- */
+ *
+ * 
+ * Credits: xVortex, BISOON, Mistawes
+
 #include "ps4.h"
 #include "ps4api.h"
 #include "defines.h"
