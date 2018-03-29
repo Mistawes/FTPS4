@@ -8,6 +8,8 @@ all: clean $(TARGET) $(KTARGET)
 $(TARGET):
 	cd payload && $(MAKE) -s
 	cp payload/$(TARGET) $(TARGET)
+	cd tool && $(MAKE) -s
+	tool/bin2js $(TARGET) > exploit/payload.js
 
 $(KTARGET):
 	cd kpayload && $(MAKE) -s

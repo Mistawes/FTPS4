@@ -1,3 +1,6 @@
+build/
+tool/bin2js
+*.map
 *.o
 *.bin
 *.elf

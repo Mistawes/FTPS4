@@ -135,7 +135,7 @@ TYPE_FIELD(uint64_t uio_offset, 0x10);
 TYPE_FIELD(uint64_t uio_resid, 0x18);
 TYPE_FIELD(uint32_t uio_segflg, 0x20);
 TYPE_FIELD(uint32_t uio_rw, 0x24);
-TYPE_FIELD(struct thread *uio_td, 0x28);
+//TYPE_FIELD(struct thread *uio_td, 0x28);
 TYPE_END();
 
 struct lock_object {
