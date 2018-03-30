@@ -256,7 +256,7 @@ struct jkuap {
 	void *payload;
 	size_t psize;
 };
-
+/*
 int kload(struct thread *td, struct jkuap *uap) {
 	uint64_t kernbase = getkernbase();
 	resolve(kernbase);
@@ -281,9 +281,11 @@ int kload(struct thread *td, struct jkuap *uap) {
 	// restore CR0
 	__writecr0(CR0);
 
+	printf("\nKload completed!\n");
+
 	return 0;
 }
-/*
+*/
 int jkpatch(struct thread *td, struct jkuap *uap) {
 	uint64_t kernbase = getkernbase();
 	resolve(kernbase);
@@ -330,7 +332,6 @@ int jkpatch(struct thread *td, struct jkuap *uap) {
 
 	return 0;
 }
-*/
 
 int get_ip_address(char *ip_address)
 {
@@ -356,9 +357,9 @@ error:
 	return -1;
 }
 
+/*
 //int gogoftps4(void)
 void* gogoftps4(void * td)
-
 {
 	char ip_address[SCE_NET_CTL_IPV4_ADDR_STR_LEN];
 	char msg[64];
@@ -393,8 +394,10 @@ error:
 
 	return 0;
 }
+*/
 
-int _main(struct thread *td)
+int _main(void)
+//int _main(struct thread *td)
 {
 
 	run = 1;
@@ -404,27 +407,34 @@ int _main(struct thread *td)
 	initLibc();
 	initNetwork();
 	initPthread();
-
+/*
 #ifdef DEBUG_SOCKET
 	initDebugSocket();
 #endif
+*/
+	size_t psize = 0;
+	void *payload = NULL;
+	receive_payload(&payload, &psize);
 
-	// patch some things in the kernel (sandbox, prison, debug settings etc..)
-	syscall(11, kload);
-
+	syscall(11, jkpatch, payload, psize);
+	if (payload) {
+		free(payload);
+	}
+/*
 	int startFTPS4;
-	ScePthread thread;
-	scePthreadCreate(&thread, NULL, gogoftps4, (void *)&startFTPS4, "ftps4_thread");
+	ScePthread ftps4Thread;
+	scePthreadCreate(&ftps4Thread, NULL, gogoftps4, (void *)&startFTPS4, "ftps4_thread");
 
 	// Do stuff..
 
 	// Wait until the ftps4 thread terminates
-	scePthreadJoin(thread, NULL);
+	scePthreadJoin(ftps4Thread, NULL);
 	return startFTPS4;
 
 #ifdef DEBUG_SOCKET
 	closeDebugSocket();
 #endif
+*/
 	return 0;
 }
 
