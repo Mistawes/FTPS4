@@ -357,7 +357,6 @@ error:
 	return -1;
 }
 
-/*
 //int gogoftps4(void)
 void* gogoftps4(void * td)
 {
@@ -394,7 +393,6 @@ error:
 
 	return 0;
 }
-*/
 
 int _main(void)
 //int _main(struct thread *td)
@@ -407,11 +405,13 @@ int _main(void)
 	initLibc();
 	initNetwork();
 	initPthread();
+	//initDebugSocket(); - undefined reference to `initDebugSocket' - causes page fault
 /*
 #ifdef DEBUG_SOCKET
 	initDebugSocket();
 #endif
 */
+/*
 	size_t psize = 0;
 	void *payload = NULL;
 	receive_payload(&payload, &psize);
@@ -420,7 +420,10 @@ int _main(void)
 	if (payload) {
 		free(payload);
 	}
-/*
+*/
+
+	syscall(11, jkpatch);
+
 	int startFTPS4;
 	ScePthread ftps4Thread;
 	scePthreadCreate(&ftps4Thread, NULL, gogoftps4, (void *)&startFTPS4, "ftps4_thread");
@@ -430,7 +433,7 @@ int _main(void)
 	// Wait until the ftps4 thread terminates
 	scePthreadJoin(ftps4Thread, NULL);
 	return startFTPS4;
-
+/*
 #ifdef DEBUG_SOCKET
 	closeDebugSocket();
 #endif
