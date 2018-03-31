@@ -173,15 +173,15 @@ void custom_SHUTDOWN(ftps4_client_info_t *client) {
 	run = 0;
 }
 
-char mount_from_path[PATH_MAX]; /* Yes, global. Lazy */
+char mount_from_path[PATH_MAX]; // Yes, global. Lazy
 
 void custom_MTFR(ftps4_client_info_t *client)
 {
 	char from_path[PATH_MAX];
-	/* Get the origin filename */
+	// Get the origin filename
 	ftps4_gen_ftp_fullpath(client, from_path, sizeof(from_path));
 
-	/* The file to be renamed is the received path */
+	// The file to be renamed is the received path
 	strncpy(mount_from_path, from_path, sizeof(mount_from_path));
 	ftps4_ext_client_send_ctrl_msg(client, "350 I need the destination name b0ss." FTPS4_EOL);
 }
@@ -194,10 +194,10 @@ void custom_MTTO(ftps4_client_info_t *client)
 	char errmsg[255];
 	int result;
 
-	/* Get the destination filename */
+	// Get the destination filename
 	ftps4_gen_ftp_fullpath(client, path_to, sizeof(path_to));
 
-	/* Just in case */
+	// Just in case
 	unmount(path_to, 0);
 
 	iov[0].iov_base = "fstype";
@@ -357,7 +357,6 @@ error:
 	return -1;
 }
 
-//int gogoftps4(void)
 void* gogoftps4(void * td)
 {
 	char ip_address[SCE_NET_CTL_IPV4_ADDR_STR_LEN];
@@ -394,8 +393,8 @@ error:
 	return 0;
 }
 
+
 int _main(void)
-//int _main(struct thread *td)
 {
 
 	run = 1;
@@ -411,18 +410,19 @@ int _main(void)
 	initDebugSocket();
 #endif
 */
-/*
+
 	size_t psize = 0;
 	void *payload = NULL;
 	receive_payload(&payload, &psize);
 
 	syscall(11, jkpatch, payload, psize);
+	
 	if (payload) {
 		free(payload);
 	}
-*/
 
-	syscall(11, jkpatch);
+
+	//syscall(11, jkpatch);
 
 	int startFTPS4;
 	ScePthread ftps4Thread;
@@ -433,6 +433,7 @@ int _main(void)
 	// Wait until the ftps4 thread terminates
 	scePthreadJoin(ftps4Thread, NULL);
 	return startFTPS4;
+
 /*
 #ifdef DEBUG_SOCKET
 	closeDebugSocket();
