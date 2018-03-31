@@ -1,5 +1,4 @@
-/* golden */
-/* 1/2/2018 */
+// Credits: golden, Mistawes, xvortex, xerpi, flatz, idc, zecoxao, hitodama, osdev.org, and anyone else I forgot!
 
 #include "jkpatch.h"
 #include "install.h"
@@ -57,11 +56,11 @@ void debug_patches(struct thread *td, uint64_t kernbase) {
 	// registry patches for extra debug information
 	// fucks with the whole system, patches sceRegMgrGetInt
 	// 405
-	//*(uint32_t *)(kernbase + 0x4CECB7) = 0;
-	//*(uint32_t *)(kernbase + 0x4CFB9B) = 0;
+	// *(uint32_t *)(kernbase + 0x4CECB7) = 0;
+	// *(uint32_t *)(kernbase + 0x4CFB9B) = 0;
 	// 455
-	//*(uint32_t *)(kernbase + 0x4D70F7) = 0;
-	//*(uint32_t *)(kernbase + 0x4D7F81) = 0;
+	// *(uint32_t *)(kernbase + 0x4D70F7) = 0;
+	// *(uint32_t *)(kernbase + 0x4D7F81) = 0;
 
 	// flatz RSA check patch
 	*(uint32_t *)(kernbase + 0x69F4E0) = 0x90C3C031;
@@ -85,9 +84,6 @@ void debug_patches(struct thread *td, uint64_t kernbase) {
 }
 
 void scesbl_patches(struct thread *td, uint64_t kernbase) {
-	// JKpatch ucred privs
-	//char *td_ucred = (char *)td->td_ucred;
-
 	// escalate ucred privs, needed for access to the filesystem ie* mounting & decrypting files
 	void *td_ucred = *(void **)(((char *)td) + 304); // p_ucred == td_ucred
 
@@ -256,36 +252,7 @@ struct jkuap {
 	void *payload;
 	size_t psize;
 };
-/*
-int kload(struct thread *td, struct jkuap *uap) {
-	uint64_t kernbase = getkernbase();
-	resolve(kernbase);
 
-	// disable write protect
-	uint64_t CR0 = __readcr0();
-	__writecr0(CR0 & ~CR0_WP);
-
-	// enable uart
-	uint8_t *disable_console_output = (uint8_t *)(kernbase + __disable_console_output);
-	*disable_console_output = FALSE;
-
-	// real quick jailbreak ;)
-	jailbreak(td, kernbase);
-
-	// quick debug patches
-	debug_patches(td, kernbase);
-
-	// sceSblMgr patches
-	scesbl_patches(td, kernbase);
-
-	// restore CR0
-	__writecr0(CR0);
-
-	printf("\nKload completed!\n");
-
-	return 0;
-}
-*/
 int jkpatch(struct thread *td, struct jkuap *uap) {
 	uint64_t kernbase = getkernbase();
 	resolve(kernbase);
@@ -333,6 +300,7 @@ int jkpatch(struct thread *td, struct jkuap *uap) {
 	return 0;
 }
 
+// get PS4 IP for FTPS4
 int get_ip_address(char *ip_address)
 {
 	int ret;
@@ -357,13 +325,14 @@ error:
 	return -1;
 }
 
+// Start FTPS4
 void* gogoftps4(void * td)
 {
 	char ip_address[SCE_NET_CTL_IPV4_ADDR_STR_LEN];
 	char msg[64];
 	
 	initSysUtil();
-	notify("Welcome to FTPS4 v"VERSION);
+	notify("Welcome to FTPS4 w/ JKpatch v"VERSION);
 
 	int ret = get_ip_address(ip_address);
 	if (ret < 0)
@@ -396,7 +365,7 @@ error:
 
 int _main(void)
 {
-
+	// Set FTPS4 run status
 	run = 1;
 
 	// Init and resolve libraries
@@ -404,64 +373,26 @@ int _main(void)
 	initLibc();
 	initNetwork();
 	initPthread();
-	//initDebugSocket(); - undefined reference to `initDebugSocket' - causes page fault
-/*
-#ifdef DEBUG_SOCKET
-	initDebugSocket();
-#endif
-*/
 
 	size_t psize = 0;
 	void *payload = NULL;
 	receive_payload(&payload, &psize);
 
+	// It's time to kick ass and chew bubble gum, and I'm all outta gum!
 	syscall(11, jkpatch, payload, psize);
 	
 	if (payload) {
 		free(payload);
 	}
 
-
-	//syscall(11, jkpatch);
-
+	// Start FTPS4 thread
 	int startFTPS4;
 	ScePthread ftps4Thread;
 	scePthreadCreate(&ftps4Thread, NULL, gogoftps4, (void *)&startFTPS4, "ftps4_thread");
-
-	// Do stuff..
 
 	// Wait until the ftps4 thread terminates
 	scePthreadJoin(ftps4Thread, NULL);
 	return startFTPS4;
 
-/*
-#ifdef DEBUG_SOCKET
-	closeDebugSocket();
-#endif
-*/
 	return 0;
 }
-
-/*
-int _main(void) {
-	initKernel();
-	initLibc();
-	initNetwork();
-
-	// fuck up the updates
-	unlink("/update/PS4UPDATE.PUP");
-	mkdir("/update/PS4UPDATE.PUP", 777);
-
-	size_t psize = 0;
-	void *payload = NULL;
-	receive_payload(&payload, &psize);
-
-	syscall(11, jkpatch, payload, psize);
-
-	if (payload) {
-		free(payload);
-	}
-
-	return 0;
-}
-*/

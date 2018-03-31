@@ -1,7 +1,9 @@
-# Jailbreak Kernel Patches
+# FTPS4 + Jailbreak Kernel Patches
 
 ### Features
 
+- FTPS4
+- Decrypt eboot/self and sprx
 - Jailbreak
 - Sandbox escape
 - Debug settings
@@ -18,7 +20,7 @@ I use the standard fake pkg keys, created by flatz.
 ### General Notes
 **Only for 4.55 Jailbroken PlayStation 4 consoles!**
 
-The main jkpatch payload utilizes a port of CTurt's payload sdk. Change the [Makefile](payload/Makefile) to have `LIBPS4` point to the ps4-payload-sdk directory on your machine. I could have it referenced from the home directory but meh...
+The main jkpatch payload utilizes a port of CTurt's payload sdk (xvortex). This requires an environment variable `PS4SDK` pointing to your SDK. Alternatively, change the [Makefile](payload/Makefile) to have `LIBPS4` point to the ps4-payload-sdk directory on your machine. I could have it referenced from the home directory but meh...
 ```makefile
 # change this to point to your ps4-payload-sdk directory
 LIBPS4	:=	/home/John/ps4-payload-sdk/libPS4
@@ -42,9 +44,14 @@ You can read/write memory, call functions, read/write kernel memory, and even lo
 
 ### Coming Soon
 - General code clean up and refactoring
+- Hope to make standalone elf for FTPS4
 
-Thank you to flatz, idc, zecoxao, hitodama, osdev.org, and anyone else I forgot!
+### Credits:
+**Creator of JKpatch:**
 
 Twitter: [@cloverleafswag3](https://twitter.com/cloverleafswag3) psxhax: [g991](https://www.psxhax.com/members/g991.473299/)
-
 **golden <3**
+
+**Merge with FTPS4** - [Mistawes](https://github.com/mistawes), [xvortex](https://github.com/xvortex), [Xerpi](https://github.com/xerpi)
+
+Thank you to flatz, idc, zecoxao, hitodama, osdev.org, and anyone else I forgot!
