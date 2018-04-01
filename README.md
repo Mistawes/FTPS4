@@ -46,6 +46,12 @@ You can read/write memory, call functions, read/write kernel memory, and even lo
 - General code clean up and refactoring
 - Hope to make standalone elf for FTPS4
 
+### How to use:
+You need to trigger the [4.55 FreeBSD BPF kernel exploit](https://github.com/Cryptogenic/PS4-4.55-Kernel-Exploit) and send (netcat/socat) this file over your network, to your PS4s IP. Send the payload.bin to port 9020 and the kpayload.elf to 9023.
+Or simply replace the payload.bin and kpayload.elf in the app you're using (Memview, PS4 Trainer Utility, PS4 Cheater etc.).
+
+I have personally configured Apache to use CGI scripts to automatically send these over when I navigate to a certain URL.
+
 ### Credits:
 **Creator of JKpatch:**
 
