@@ -2,11 +2,11 @@
 
 ### Features
 
-- FTPS4
-- Decrypt eboot/self and sprx
 - Jailbreak
 - Sandbox escape
 - Debug settings
+- FTPS4
+- Decrypt eboot/self and sprx
 - Enable UART
 - Disable system update messages
 - Delete system updates
@@ -46,13 +46,15 @@ You can read/write memory, call functions, read/write kernel memory, and even lo
 - General code clean up and refactoring
 - Hope to make standalone elf for FTPS4
 
-### How to use:
+### How to use
 You need to trigger the [4.55 FreeBSD BPF kernel exploit](https://github.com/Cryptogenic/PS4-4.55-Kernel-Exploit) and send (netcat/socat) this file over your network, to your PS4s IP. Send the payload.bin to port 9020 and the kpayload.elf to 9023.
 Or simply replace the payload.bin and kpayload.elf in the app you're using (Memview, PS4 Trainer Utility, PS4 Cheater etc.).
 
 I have personally configured Apache to use CGI scripts to automatically send these over when I navigate to a certain URL.
 
-### Credits:
+While running this payload, minimize the browser with the PS button to keep FTPS4 running in the background. I found it works best to close an application before opening a new one, when switching games. Otherwise there's a chance it may freeze and require a reboot.
+
+### Credits
 **Creator of JKpatch:**
 
 Twitter: [@cloverleafswag3](https://twitter.com/cloverleafswag3) psxhax: [g991](https://www.psxhax.com/members/g991.473299/)
